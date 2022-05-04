@@ -1,69 +1,76 @@
 package opencartesting.stepdefinitions;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
+import opencartesting.model.LoginData;
+import opencartesting.tasks.LongIn;
+import opencartesting.tasks.OpenUp;
+
+import java.util.List;
+
+import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
 
 public class OpenCartStepDefinitions {
     @Before
     public void sedStage(){ OnStage.setTheStage(new OnlineCast()); }
 
+    @Given("^I want to log in to the opencart site$")
+    public void iWantToLogInToTheOpencartSite()   {
+        OnStage.theActorCalled("User").wasAbleTo(OpenUp.theUrl());
+    }
+
+    @Then("^I enter my credentials$")
+    public void iEnterMyCredentials(List<LoginData> loginData)  {
+        theActorInTheSpotlight().attemptsTo(LongIn.LGD(loginData));
+    }
+
 
     @Given("^I want to search for orders by customer$")
-    public void iWantToSearchForOrdersByCustomer() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iWantToSearchForOrdersByCustomer()   {
+
     }
 
     @When("^I filter by customer name$")
-    public void iFilterByCustomerName() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iFilterByCustomerName() {
+
     }
 
     @Then("^displays the orders in your name$")
-    public void displaysTheOrdersInYourName() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void displaysTheOrdersInYourName()   {
+
     }
 
     @Given("^I want to search for orders by date added$")
-    public void iWantToSearchForOrdersByDateAdded() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iWantToSearchForOrdersByDateAdded()   {
+
     }
 
     @When("^filtering by date added$")
-    public void filteringByDateAdded() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void filteringByDateAdded()   {
+
     }
 
     @Then("^displays the orders by the date added$")
-    public void displaysTheOrdersByTheDateAdded() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void displaysTheOrdersByTheDateAdded()   {
+
     }
 
     @Given("^I want to search for orders by Id$")
-    public void iWantToSearchForOrdersById() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iWantToSearchForOrdersById()  {
+
     }
 
     @When("^filtering by order Id$")
-    public void filteringByOrderId() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void filteringByOrderId()  {
+
     }
 
     @Then("^displays the orders by order Id$")
-    public void displaysTheOrdersByOrderId() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void displaysTheOrdersByOrderId() {
+
     }
 }
