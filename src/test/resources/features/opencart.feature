@@ -4,27 +4,17 @@ Feature: as an administrator of the opencart online store, I want to consult the
     I as administrator
     want to search for orders in sales
     to visualize their information
-  @scenario1
-  Scenario: loggin
+
+  @scenario
+  Scenario: login and filter sales orders
     Given I want to log in to the opencart site
-    Then I enter my credentials
+    When I enter my credentials
     |username|password|
     |demo    |demo    |
-
-  @scenario2
-    Scenario: orders by customer
-      Given I want to search for orders by customer
-      When I filter by customer name
-      Then  displays the orders in your name
-
-  @scenario3
-  Scenario: orders by date
-    Given I want to search for orders by date added
-    When filtering by date added
-    Then  displays the orders by the date added
-
-  @scenario4
-  Scenario: orders by ID
-    Given I want to search for orders by Id
-    When filtering by order Id
-    Then  displays the orders by order Id
+    And filter orders by customer
+    |customer   |
+    |David Singh|
+    And filtering by date added
+      |date_added  |
+      |2022-05-05  |
+    Then  filtered sales orders are displayed

@@ -1,14 +1,19 @@
 package opencartesting.stepdefinitions;
 
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
-import opencartesting.model.LoginData;
+import opencartesting.model.*;
+import opencartesting.questions.resultsShow;
 import opencartesting.tasks.LongIn;
 import opencartesting.tasks.OpenUp;
+import opencartesting.tasks.Sales;
+import opencartesting.tasks.SalesDate;
 
 import java.util.List;
 
@@ -19,58 +24,27 @@ public class OpenCartStepDefinitions {
     public void sedStage(){ OnStage.setTheStage(new OnlineCast()); }
 
     @Given("^I want to log in to the opencart site$")
-    public void iWantToLogInToTheOpencartSite()   {
+    public void i_want_to_log_in_to_the_opencart_site() throws Exception {
         OnStage.theActorCalled("User").wasAbleTo(OpenUp.theUrl());
     }
 
-    @Then("^I enter my credentials$")
-    public void iEnterMyCredentials(List<LoginData> loginData)  {
+    @When("^I enter my credentials$")
+    public void i_enter_my_credentials(List<LoginData>loginData )  {
         theActorInTheSpotlight().attemptsTo(LongIn.LGD(loginData));
     }
 
-
-    @Given("^I want to search for orders by customer$")
-    public void iWantToSearchForOrdersByCustomer()   {
-
+    @And("^filter orders by customer$")
+    public void filter_orders_by_customer(List<FiltersData>filtersData) {
+        theActorInTheSpotlight().attemptsTo(Sales.SPP(filtersData));
     }
 
-    @When("^I filter by customer name$")
-    public void iFilterByCustomerName() {
-
+    @And("^filtering by date added$")
+    public void filtering_by_date_added(List<FiltersData>filtersData) {
+        theActorInTheSpotlight().attemptsTo(SalesDate.SDP(filtersData));
     }
 
-    @Then("^displays the orders in your name$")
-    public void displaysTheOrdersInYourName()   {
-
-    }
-
-    @Given("^I want to search for orders by date added$")
-    public void iWantToSearchForOrdersByDateAdded()   {
-
-    }
-
-    @When("^filtering by date added$")
-    public void filteringByDateAdded()   {
-
-    }
-
-    @Then("^displays the orders by the date added$")
-    public void displaysTheOrdersByTheDateAdded()   {
-
-    }
-
-    @Given("^I want to search for orders by Id$")
-    public void iWantToSearchForOrdersById()  {
-
-    }
-
-    @When("^filtering by order Id$")
-    public void filteringByOrderId()  {
-
-    }
-
-    @Then("^displays the orders by order Id$")
-    public void displaysTheOrdersByOrderId() {
-
+    @Then("^filtered sales orders are displayed$")
+    public void filtered_sales_orders_are_displayed() {
+        theActorInTheSpotlight().should(GivenWhenThen.seeThat(resultsShow.info()));
     }
 }
