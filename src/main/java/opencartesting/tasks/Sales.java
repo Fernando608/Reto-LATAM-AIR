@@ -10,6 +10,7 @@ import opencartesting.utils.Wait;
 
 import java.util.List;
 
+;
 import static opencartesting.userinterface.SalesPage.*;
 
 public class Sales implements Task {
@@ -23,9 +24,12 @@ public class Sales implements Task {
                 Click.on(SELECT_SALES),
                 Click.on(SELECT_ORDERS),
                 Enter.theValue(pn.get(0).getCustomer()).into(INPUT_NAME_CUSTOMER),
-                Click.on(CLIC_FILTER)
+                Click.on(INPUT_DATE_ADDED),
+                Enter.theValue(pn.get(0).getDate_added()).into(INPUT_DATE_ADDED),
+                Click.on(CLIC_FILTER),
+                Click.on(BUTTON_VIEW)
         );
-        Wait.Time(4000);
+        Wait.Time(2000);
     }
 
     public static Sales SPP(List<FiltersData> pn) {

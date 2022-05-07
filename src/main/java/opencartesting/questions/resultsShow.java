@@ -2,22 +2,26 @@ package opencartesting.questions;
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
-import net.serenitybdd.screenplay.actions.Click;
-import opencartesting.utils.Wait;
+import opencartesting.userinterface.SalesPage;
 
-import static opencartesting.userinterface.ResultsPage.*;
 
-public class resultsShow implements Question{
-    public static resultsShow info() {
-        return new resultsShow();
+public class resultsShow implements Question <Boolean> {
+    private String question;
+    public resultsShow(String question) {
+        this.question = question;
     }
+
     @Override
-    public Object answeredBy(Actor actor){
-        actor.attemptsTo(
-                Click.on(BUTTON_CHECKBOX),
-                Click.on(BUTTON_PRINT)
-        );
-        Wait.Time(3000);
-        return true;
+    public Boolean answeredBy(Actor actor) {
+        boolean result;
+        String text = (SalesPage.CONFIRM_NAME_CUSTOMER.resolveFor(actor).getText());
+        if (text.contains(question)){
+            result=true;
+        }else {
+            result=false;
+        }
+        return result;
     }
+
+    public static resultsShow RS(String question) {return new resultsShow(question);}
 }
