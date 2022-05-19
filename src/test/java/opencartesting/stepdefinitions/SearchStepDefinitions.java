@@ -7,7 +7,7 @@ import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 import opencartesting.model.FiltersData;
-import opencartesting.questions.resultsShow;
+import opencartesting.questions.ResultsShow;
 import opencartesting.tasks.Sales;
 
 import java.util.List;
@@ -25,6 +25,6 @@ public class SearchStepDefinitions {
 
     @Then("^filtered sales orders are displayed (.*)$")
     public void filteredSalesOrdersAreDisplayed(String question) {
-        theActorInTheSpotlight().should(GivenWhenThen.seeThat(resultsShow.RS(question)));
+        theActorInTheSpotlight().should(GivenWhenThen.seeThat(ResultsShow.RS(question)));
     }
 }

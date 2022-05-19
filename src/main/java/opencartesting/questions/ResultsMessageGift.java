@@ -14,7 +14,6 @@ public class ResultsMessageGift implements Question <Boolean> {
     public Boolean answeredBy(Actor actor) {
         boolean resultado;
         String text = (SalesGiftPage.CONFIRM_MESSAGE.resolveFor(actor).getText());
-        System.out.println("MENSAJE: "+SalesGiftPage.CONFIRM_MESSAGE);
         if (text.contains(message)){
             resultado=true;
         }else {

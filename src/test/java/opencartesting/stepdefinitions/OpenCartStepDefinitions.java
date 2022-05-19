@@ -7,7 +7,7 @@ import cucumber.api.java.en.Then;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 import opencartesting.model.*;
-import opencartesting.questions.ElementSalesClic;
+import opencartesting.questions.ResultsUserSession;
 import opencartesting.tasks.LongIn;
 import opencartesting.tasks.OpenUp;
 
@@ -15,6 +15,8 @@ import java.util.List;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
+import static org.hamcrest.core.IsEqual.equalTo;
+
 
 public class OpenCartStepDefinitions {
     @Before
@@ -31,9 +33,10 @@ public class OpenCartStepDefinitions {
         theActorInTheSpotlight().attemptsTo(LongIn.LGD(loginData));
     }
 
-
-    @Then("^this element Sales is clikeable$")
-    public void thisElementSalesIsClikeable() {
-        theActorInTheSpotlight().should(seeThat(ElementSalesClic.isClickeable()));
+    @Then("^valid user session (.*)$")
+    public void validUserSessionDemoDemo(String user) {
+        theActorInTheSpotlight().should(seeThat(ResultsUserSession.value(), equalTo(user)));
     }
+
+
 }

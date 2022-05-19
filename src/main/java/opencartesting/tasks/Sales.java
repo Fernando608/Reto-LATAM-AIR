@@ -6,11 +6,12 @@ import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
 import opencartesting.model.FiltersData;
-import opencartesting.utils.Wait;
+import opencartesting.utils.WaitTime;
 
 import java.util.List;
 
-;
+
+import static opencartesting.interactions.Clicks.CLIC_FILTER;
 import static opencartesting.userinterface.SalesPage.*;
 
 public class Sales implements Task {
@@ -29,7 +30,7 @@ public class Sales implements Task {
                 Click.on(CLIC_FILTER),
                 Click.on(BUTTON_VIEW)
         );
-        Wait.Time(2000);
+        WaitTime.Time(2000);
     }
 
     public static Sales SPP(List<FiltersData> pn) {

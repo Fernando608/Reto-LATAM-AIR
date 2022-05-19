@@ -6,7 +6,7 @@ import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
 import opencartesting.model.GiftData;
-import opencartesting.utils.Wait;
+import opencartesting.utils.WaitTime;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class SalesGift implements Task {
                 Enter.theValue(sg.get(0).getAmount()).into(INPUT_TO_AMOUNT),
                 Click.on(BUTTON_SAVE)
         );
-        Wait.Time(2000);
+        WaitTime.Time(2000);
     }
 
     public static SalesGift SGP(List<GiftData> sg) {
