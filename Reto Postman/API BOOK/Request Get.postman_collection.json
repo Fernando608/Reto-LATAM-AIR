@@ -1,0 +1,365 @@
+{
+	"info": {
+		"_postman_id": "a8a981ce-2e8e-4a00-895c-b0bea861f4bb",
+		"name": "Request Get",
+		"description": "StartFragment\n\n# Simple Books API\n\nThis API allows you to reserve a book.\n\nThe API is available at `https://simple-books-api.glitch.me`\n\n## Endpoints\n\n### Status\n\nGET `/status`\n\nReturns the status of the API.\n\n### List of books\n\nGET `/books`\n\nReturns a list of books.\n\nOptional query parameters:\n\n*   type: fiction or non-fiction\n*   limit: a number between 1 and 20.\n    \n\n### Get a single book\n\nGET `/books/:bookId`\n\nRetrieve detailed information about a book.\n\n### Get all orders\n\nGET `/orders`\n\nAllows you to view all orders. Requires authentication.\n\n### Get an order\n\nGET `/orders/:orderId`\n\nAllows you to view an existing order. Requires authentication.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20041326"
+	},
+	"item": [
+		{
+			"name": "Get Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verifica Mensaje OK en la respuesta JSON\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status).to.eql(\"OK\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_API}}/status",
+					"host": [
+						"{{URL_API}}"
+					],
+					"path": [
+						"status"
+					]
+				},
+				"description": "*   Primer Script valida que la respuesta es de tipo Json.\n*   El segundo script Imprime la respuesta tipo Json por la Consola."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Books",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verifica respuesta es tipo Json\", function () {   \r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valido nombre de un libro en el cuerpo de la respuesta\", function () {\r",
+							"    Name_BOOK = pm.globals.get(\"Name_Book\");\r",
+							"    pm.expect(pm.response.text()).to.include(Name_BOOK);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_API}}/books",
+					"host": [
+						"{{URL_API}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Orders Failed Auth",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validación Mensaje de respuesta por falta de Autorización\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.error).to.eql(\"Missing Authorization header.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_API}}/orders",
+					"host": [
+						"{{URL_API}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Orders Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Buscar valores en el cuerpo\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Juan\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1fc93cbfc0f9a446eed653cc5c9fd9eca6b1c64507fbf957fdd2aa762c2a9d6f",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_API}}/orders",
+					"host": [
+						"{{URL_API}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order Id Exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar búsqueda de Orden por Id\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    id = pm.globals.get(\"Id_Order_Exist\");     \r",
+							"    pm.expect(jsonData.id).to.eql(id);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1fc93cbfc0f9a446eed653cc5c9fd9eca6b1c64507fbf957fdd2aa762c2a9d6f",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_API}}/orders/{{Id_Order_Exist}}",
+					"host": [
+						"{{URL_API}}"
+					],
+					"path": [
+						"orders",
+						"{{Id_Order_Exist}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order Id No Exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Valida Mensaje de respuesta, Orden No Encontrada\", function () {\r",
+							"    orderID = pm.globals.get(\"ID_Order_No-Exist\");\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.error).to.eql(\"No order with id \"+orderID+\".\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1fc93cbfc0f9a446eed653cc5c9fd9eca6b1c64507fbf957fdd2aa762c2a9d6f",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_API}}/orders/{{ID_Order_No-Exist}}",
+					"host": [
+						"{{URL_API}}"
+					],
+					"path": [
+						"orders",
+						"{{ID_Order_No-Exist}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Books Id Exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Buscar Orden por Id\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(3);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1fc93cbfc0f9a446eed653cc5c9fd9eca6b1c64507fbf957fdd2aa762c2a9d6f",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_API}}/books/{{ID_Book_Exist}}",
+					"host": [
+						"{{URL_API}}"
+					],
+					"path": [
+						"books",
+						"{{ID_Book_Exist}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Books Id No Exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Valida Mensaje de respuesta, Libro Id No Encontrad\", function () {\r",
+							"    bookID = pm.globals.get(\"ID_Book_No-Exist\");\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.error).to.eql(\"No book with id \"+bookID);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1fc93cbfc0f9a446eed653cc5c9fd9eca6b1c64507fbf957fdd2aa762c2a9d6f",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_API}}/books/{{ID_Book_No-Exist}}",
+					"host": [
+						"{{URL_API}}"
+					],
+					"path": [
+						"books",
+						"{{ID_Book_No-Exist}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Verificar código de estado 200 o 404(Para Escenarios Fail)\", function () {",
+					"    pm.expect(pm.response.code).to.be.oneOf([200,404]);",
+					"});"
+				]
+			}
+		}
+	]
+}

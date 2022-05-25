@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "6d97423c-6e3b-48e6-b934-b19d2db9a529",
+		"name": "Request Post",
+		"description": "StartFragment\n\n# Simple Books API\n\nThis API allows you to reserve a book.\n\nThe API is available at `https://simple-books-api.glitch.me`\n\n## Endpoints\n\n### Submit an order\n\nPOST `/orders`\n\nAllows you to submit a new order. Requires authentication.\n\nThe request body needs to be in JSON format and include the following properties:\n\n*   `bookId` - Integer - Required\n*   `customerName` - String - Required\n    \n\nExample\n\nPlain Text\n\n```\nPOST /orders/\nAuthorization: Bearer \n{\n  \"bookId\": 1,\n  \"customerName\": \"John\"\n}\n\n```\n\nThe response body will contain the order Id.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20041326"
+	},
+	"item": [
+		{
+			"name": "Create Order Failed Body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verificar Mensaje en caso de No encontar Orden o envío de Body vacío\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Invalid or missing bookId.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1fc93cbfc0f9a446eed653cc5c9fd9eca6b1c64507fbf957fdd2aa762c2a9d6f",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL_API}}/orders",
+					"host": [
+						"{{URL_API}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order Success Body Json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar Orden creada con exito y Código de estado\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.created).to.eql(true);\r",
+							"    pm.response.to.have.status(\"Created\");\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"var schema = {\r",
+							"    \"items\": {\r",
+							"        \"created\": {\"type\":\"boolean\"},  \r",
+							"        \"orderId\": {\"type\":\"string\"}\r",
+							"    }\r",
+							"};\r",
+							"\r",
+							"pm.test('Validar esquema JSON de respuesta', function () {\r",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1fc93cbfc0f9a446eed653cc5c9fd9eca6b1c64507fbf957fdd2aa762c2a9d6f",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"bookId\": 4,\r\n  \"customerName\": \"Juan\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_API}}/orders",
+					"host": [
+						"{{URL_API}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

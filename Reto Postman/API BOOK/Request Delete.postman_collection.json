@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "b80a45bf-43ee-4df7-b5d8-cb6205b86f00",
+		"name": "Request Delete",
+		"description": "### Delete an order\n\nDELETE `/orders/:orderId`\n\nDelete an existing order. Requires authentication.\n\nThe request body needs to be empty.\n\nExample\n\n```\nDELETE /orders/PF6MflPDcuhWobZcgmJy5\nAuthorization: Bearer \n\n```",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20041326"
+	},
+	"item": [
+		{
+			"name": "Delete Order Id No Exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar código de estado 404, en caso de no encontrar Id Orden\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+							"});\r",
+							"pm.test(\"Verficar Mensaje de error, con el Id de Orden N\", function () {\r",
+							"    q = pm.globals.get(\"ID_Order_No-Exist\");\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.error).to.eql(\"No order with id \"+q+\".\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1fc93cbfc0f9a446eed653cc5c9fd9eca6b1c64507fbf957fdd2aa762c2a9d6f",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL_API}}/orders/{{ID_Order_No-Exist}}",
+					"host": [
+						"{{URL_API}}"
+					],
+					"path": [
+						"orders",
+						"{{ID_Order_No-Exist}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Order Id  Exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verificar código de estado 204, Petición DELETE Exitosa\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([204]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1fc93cbfc0f9a446eed653cc5c9fd9eca6b1c64507fbf957fdd2aa762c2a9d6f",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL_API}}/orders/2ZKIFLJWKj7cUJwFRjZz_",
+					"host": [
+						"{{URL_API}}"
+					],
+					"path": [
+						"orders",
+						"2ZKIFLJWKj7cUJwFRjZz_"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

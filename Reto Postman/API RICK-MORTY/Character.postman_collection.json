@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "ad584272-8f2a-4b3e-b3ac-6c7c71ddf0bf",
+		"name": "Character",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20041326"
+	},
+	"item": [
+		{
+			"name": "Get all charaters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verificar código de estado 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Realiza búsqueda de personaje por nombre y verifica su Species\", function () {\r",
+							"    var res = pm.response.json();\r",
+							"    var name = res.results.find(n => n.name == pm.environment.get('Name_Personaje'))\r",
+							"    pm.expect(name.species).to.eql(\"Human\")\r",
+							"});\r",
+							"\r",
+							"pm.test(\"La lista de personajes no está vacía, Informa que tiene más de 825\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.info.count).to.be.greaterThan(825);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/character",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"character"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get charaters Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verificar código de estado 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Realiza búsqueda de personaje por Id y verifica su Nombre\", function () {\r",
+							"    var res = pm.response.json();\r",
+							"    var id = res.results.find(n => n.id == 142)\r",
+							"    pm.expect(id.name).to.eql(\"Gibble Snake\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/character?page={{Page}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"character"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "{{Page}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get charaters ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verificar código de estado 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Verificar si Id personaje obtenido en respuesta es igual al enviado por URL\", function () {\r",
+							"   pm.expect(pm.response.json().id).to.eql(parseInt(pm.environment.get('Id')));\r",
+							"   var i = pm.response.json().id;\r",
+							"   console.log(\"El Id de personaje es :\"+i);\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/character/{{Id}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"character",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get charaters ID Multiple",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verificar código de estado 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Validar Id de Personajes Enviados Vs. Los Recibidos\", function () {\r",
+							"    var Ids_Personajes = pm.environment.get('Id_Multiple').split(',').map(Number);\r",
+							"    var Ids_Person_Respose = pm.response.json().map(id => id.id);\r",
+							"     pm.expect(Ids_Personajes.length).to.eql(Ids_Person_Respose.length);\r",
+							"    Ids_Personajes.forEach(function(Id_Person) {\r",
+							"        pm.expect(Ids_Personajes).to.include(Id_Person);        \r",
+							"    })\r",
+							"    console.log(\"ID's Obtenidos: \"+Ids_Person_Respose);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/character/{{Id_Multiple}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"character",
+						"{{Id_Multiple}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get charaters ID Multiple Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verificar código de estado 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Buscar en contenido de Body '[ ]', por lo que no retornó respuesta\", function () {\r",
+							"    pm.response.to.have.body(\"[]\");\r",
+							"    \r",
+							"});\r",
+							"pm.test(\"Verificar en Header el atributo Tamaño de contenido, si es '2', la respuesta es vacía\", function () {\r",
+							"   pm.expect(pm.response.headers.get('Content-Length')).to.eql('2');\r",
+							"    \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/character/{{Fail_Ids_Multiple}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"character",
+						"{{Fail_Ids_Multiple}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

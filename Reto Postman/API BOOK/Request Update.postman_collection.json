@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "78c9270e-8960-4645-90e8-5abced2c00c0",
+		"name": "Request Update",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20041326"
+	},
+	"item": [
+		{
+			"name": "Update Order Id No Exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar Mensaje y Código de estado Not Found, al no encontrar Id Orden\", function () {\r",
+							"    pm.response.to.have.status(\"Not Found\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"No order with id\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1fc93cbfc0f9a446eed653cc5c9fd9eca6b1c64507fbf957fdd2aa762c2a9d6f",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{URL_API}}/orders/{{ID_Order_No-Exist}}",
+					"host": [
+						"{{URL_API}}"
+					],
+					"path": [
+						"orders",
+						"{{ID_Order_No-Exist}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Order Id Exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Validar solicitud PATCH No exitosa, retorna 204 en código de estado\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([204]);\r",
+							"});\r",
+							"pm.test(\"Códido de estado No Content, al no encontar Id de Orden\", function () {\r",
+							"    pm.response.to.have.status(\"No Content\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1fc93cbfc0f9a446eed653cc5c9fd9eca6b1c64507fbf957fdd2aa762c2a9d6f",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customer\": \"Alexandro B\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_API}}/orders/{{Id_Order_Exist}}",
+					"host": [
+						"{{URL_API}}"
+					],
+					"path": [
+						"orders",
+						"{{Id_Order_Exist}}"
+					]
+				},
+				"description": "*   Se sugiere mostrar mensaje de confirmacion al actualizar el nombre de un cliente."
+			},
+			"response": []
+		}
+	]
+}
