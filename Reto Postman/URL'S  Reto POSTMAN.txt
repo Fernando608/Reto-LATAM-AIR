@@ -1,0 +1,9 @@
+Por: Luis Fernando Farco Oviedo
+
+Parte 1:
+https://postman.com/restless-sunset-345226/workspace/book-api
+
+Parte 2:
+https://postman.com/restless-sunset-345226/workspace/api-rick-morty
+
+*Nota: Ambos espacios de trabajo son públicos.
